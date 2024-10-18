@@ -1,0 +1,320 @@
+<html>
+
+<head>
+    <base href="https://example.com/">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Texto con Efecto Máquina de Escribir y Menú Circular Bastech</title>
+    <style>
+        body {
+            background-color: #111;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Courier New', monospace;
+            overflow: hidden;
+        }
+
+        #typewriter {
+            color: #00ff00;
+            font-size: 24px;
+            white-space: pre-wrap;
+            padding-right: 5px;
+        }
+
+        .dot {
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        #menu-container {
+            display: none;
+        }
+
+        .menu-container {
+            position: relative;
+            width: 120px;
+            height: 120px;
+        }
+
+        .menu-toggle {
+            width: 100%;
+            height: 100%;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            outline: none;
+            position: relative;
+            z-index: 10;
+            transition: transform 0.3s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            color: #00ff00;
+            text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00, 0 0 30px #00ff00;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .menu-toggle:hover {
+            transform: scale(1.1);
+        }
+
+        .menu-items {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 300px;
+            height: 300px;
+            transform: translate(-50%, -50%);
+            transition: transform 0.5s ease;
+        }
+
+        .menu-item {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 60px;
+            height: 60px;
+            margin: -30px;
+            border-radius: 15px;
+            /* Esquinas redondeadas */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            color: #fff;
+            text-shadow: 0 0 10px currentColor;
+            box-shadow: 0 0 15px currentColor;
+            transition: all 0.5s ease;
+            opacity: 0;
+            transform: translate(0, 0) scale(0);
+            text-decoration: none;
+        }
+
+        .menu-open .menu-items {
+            transform: translate(-50%, -50%) rotate(180deg);
+        }
+
+        .menu-open .menu-item {
+            opacity: 1;
+            transform: translate(var(--tx), var(--ty)) scale(1) rotate(-180deg);
+        }
+
+        .menu-item:nth-child(1) {
+            --tx: -130px;
+            --ty: 0;
+            color: #ff00ff;
+        }
+
+        .menu-item:nth-child(2) {
+            --tx: -65px;
+            --ty: -112px;
+            color: #00ffff;
+        }
+
+        .menu-item:nth-child(3) {
+            --tx: 65px;
+            --ty: -112px;
+            color: #ffff00;
+        }
+
+        .menu-item:nth-child(4) {
+            --tx: 130px;
+            --ty: 0;
+            color: #ff00ff;
+        }
+
+        .menu-item:nth-child(5) {
+            --tx: 65px;
+            --ty: 112px;
+            color: #00ff00;
+        }
+
+        .menu-item:nth-child(6) {
+            --tx: -65px;
+            --ty: 112px;
+            color: #ff0000;
+        }
+
+        .menu-item:hover {
+            transform: translate(var(--tx), var(--ty)) scale(1.2) rotate(-180deg);
+        }
+
+        .menu-item::after {
+            content: attr(data-name);
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            white-space: nowrap;
+            font-size: 14px;
+            opacity: 0;
+            transition: opacity 0.3s ease, top 0.3s ease;
+            pointer-events: none;
+        }
+
+        .menu-item:hover::after {
+            opacity: 1;
+            top: 110%;
+        }
+
+        .dots {
+            display: inline-block;
+            width: 30px;
+            text-align: left;
+        }
+
+        .dot {
+            opacity: 0;
+            animation: fadeInOut 1.5s infinite;
+        }
+
+        .dot:nth-child(2) {
+            animation-delay: 0.5s;
+        }
+
+        .dot:nth-child(3) {
+            animation-delay: 1s;
+        }
+
+        @keyframes fadeInOut {
+
+            0%,
+            100% {
+                opacity: 0;
+            }
+
+            50% {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="typewriter"></div>
+    <div id="menu-container" style="display: none;">
+        <div class="menu-container">
+            <button class="menu-toggle" aria-label="Abrir menú">
+                BASTech<span class="dots"><span class="dot">.</span><span class="dot">.</span><span
+                        class="dot">.</span></span>
+            </button>
+            <div class="menu-items">
+                <a href="mailto:info@example.com" class="menu-item" data-name="Email" title="Email">&#9993;</a>
+                <a href="https://wa.me/1234567890" class="menu-item" data-name="WhatsApp" title="WhatsApp">&#128242;</a>
+                <a href="https://www.instagram.com/example" class="menu-item" data-name="Instagram"
+                    title="Instagram">&#128248;</a>
+                <a href="https://example.com/" class="menu-item" data-name="Inicio" title="Inicio">&#127968;</a>
+                <a href="https://example.com/nosotros" class="menu-item" data-name="Nosotros"
+                    title="Nosotros">&#128100;</a>
+                <a href="https://example.com/galeria" class="menu-item" data-name="Galería"
+                    title="Galería">&#128247;</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const text = "Bienvenido!!\nAquí encontrarás lo que tenemos,\npara ofrecerte en el mundo del \ndesarrollo web.\n¡Explora y descubre más!";
+        const speed = 50; // milisegundos entre cada carácter
+
+        let i = 0;
+        function typeWriter() {
+            if (i < text.length) {
+                document.getElementById("typewriter").innerHTML += text.charAt(i);
+                i++;
+                setTimeout(typeWriter, speed);
+            } else {
+                setTimeout(fadeOutText, 3000);
+            }
+        }
+
+        function fadeOutText() {
+            const typewriter = document.getElementById("typewriter");
+            typewriter.style.transition = "opacity 1s";
+            typewriter.style.opacity = 0;
+            setTimeout(showDots, 1000);
+        }
+
+        function showDots() {
+            const typewriter = document.getElementById("typewriter");
+            typewriter.innerHTML = '<span class="dot">.</span><span class="dot">.</span><span class="dot">.</span>';
+            typewriter.style.opacity = 1;
+            animateDots();
+        }
+
+        function animateDots() {
+            const dots = document.querySelectorAll('.dot');
+            let index = 0;
+            let cycles = 0;
+            const maxCycles = 3; // 3 segundos (cada ciclo dura aproximadamente 1 segundo)
+
+            function showNextDot() {
+                if (index < dots.length) {
+                    dots[index].style.opacity = 1;
+                    index++;
+                    setTimeout(showNextDot, 300);
+                } else {
+                    setTimeout(hideDots, 500);
+                }
+            }
+
+            function hideDots() {
+                dots.forEach(dot => dot.style.opacity = 0);
+                cycles++;
+                if (cycles < maxCycles) {
+                    setTimeout(() => {
+                        index = 0;
+                        showNextDot();
+                    }, 500);
+                } else {
+                    setTimeout(showMenu, 500);
+                }
+            }
+
+            showNextDot();
+        }
+
+        function showMenu() {
+            const typewriter = document.getElementById("typewriter");
+            const menuContainer = document.getElementById("menu-container");
+            typewriter.style.display = "none";
+            menuContainer.style.display = "block";
+            initializeMenu();
+        }
+
+        function initializeMenu() {
+            const menuToggle = document.querySelector('.menu-toggle');
+            const menuContainer = document.querySelector('.menu-container');
+            let isOpen = false;
+            let timeoutId;
+
+            menuToggle.addEventListener('click', () => {
+                isOpen = !isOpen;
+                menuContainer.classList.toggle('menu-open', isOpen);
+            });
+
+            menuContainer.addEventListener('mouseenter', () => {
+                clearTimeout(timeoutId);
+                if (!isOpen) {
+                    isOpen = true;
+                    menuContainer.classList.add('menu-open');
+                }
+            });
+
+            menuContainer.addEventListener('mouseleave', () => {
+                timeoutId = setTimeout(() => {
+                    isOpen = false;
+                    menuContainer.classList.remove('menu-open');
+                }, 300);
+            });
+        }
+
+        window.onload = typeWriter;
+    </script>
+</body>
+
+</html>
